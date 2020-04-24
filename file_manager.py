@@ -43,6 +43,14 @@ def createDirs():
             except FileExistsError:
                 continue
 
+# function to move certain file to a given path
+def move_file(old_file, file_path):
+    try:
+        os.rename(old_file, file_path)
+        print(f"moved file {old_file} >> {file_path}")
+    except (OSError, IndexError):
+        print(f"could not move file {old_file} >> {file_path}")
+
 # function to move files to respective folders
 def arrange():
     for file in files_list:
@@ -53,20 +61,12 @@ def arrange():
             # check if file suffix in rules dictionary
             if fextension in rules:
                 # move to location specified by rule
-                try:
-                    rule_path = rules[fextension]
-                    os.rename(file, rule_path + PurePath(file).name)
-                    print(f"moved file {file} >> {rule_path}")
-                except (OSError, IndexError):
-                    continue
+                rule_path = rules[fextension] + PurePath(file).name
+                move_file(file, rule_path)    
             else:
                 # move to default sub folder
-                try:
-                    default_path = PATH + fextension + "_files/" + PurePath(file).name
-                    os.rename(file, default_path)
-                    print(f"moved file {file} >> {default_path}")
-                except (OSError, IndexError):
-                    continue
+                default_path = PATH + fextension + "_files/" + PurePath(file).name
+                move_file(file, default_path)
 
 # calling the functions in order
 createDirs()
