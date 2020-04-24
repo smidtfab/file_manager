@@ -19,11 +19,11 @@ extension_set = set()
 
 # adding each type of extension to the set
 for file in files_list:
-    print(f"file: {file}")
     if(not Path(file).is_dir()):
+        # retrieve file suffix
         extension = PurePath(file).suffix.replace(".", "")
-        print(f"extension: {extension}")
         try:
+            # add file suffix to set with unique file suffixes
             extension_set.add(extension)
         except IndexError:
             continue
@@ -31,16 +31,15 @@ for file in files_list:
 # function to create directory for each type of extension
 def createDirs():
     for dir in extension_set:
-        print(f"dir: {dir}")
-
         # check if file suffix in rules dictionary
         if dir in rules:
             # do not create sub folder
-            print('File suffix in rules dictionary and will therefore be skipped')
+            print(f'rule for type .{dir} defined and therefore no sub folder will be created ...')
         else:
             # create a new sub folder with file name
             try:
                 os.makedirs(PATH + dir + "_files")
+                print(f"Created dir for: {dir}")
             except FileExistsError:
                 continue
 
@@ -48,22 +47,24 @@ def createDirs():
 def arrange():
     for file in files_list:
         if(not Path(file).is_dir()):
-            print(f"file: {file}")
+            # retrieve file suffix
             fextension = PurePath(file).suffix.replace(".", "")
-            print(f"extension: {fextension}")
 
             # check if file suffix in rules dictionary
             if fextension in rules:
-                # move to default sub folder
+                # move to location specified by rule
                 try:
                     rule_path = rules[fextension]
                     os.rename(file, rule_path + PurePath(file).name)
+                    print(f"moved file {file} >> {rule_path}")
                 except (OSError, IndexError):
                     continue
             else:
                 # move to default sub folder
                 try:
-                    os.rename(file, PATH + fextension + "_files/" + PurePath(file).name)
+                    default_path = PATH + fextension + "_files/" + PurePath(file).name
+                    os.rename(file, default_path)
+                    print(f"moved file {file} >> {default_path}")
                 except (OSError, IndexError):
                     continue
 
