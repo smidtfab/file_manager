@@ -1,6 +1,8 @@
 # file manager
 simple script to automatically move files on creation
 
+![demo-gif](https://s4.gifyu.com/images/demoff00833202398435.gif)
+
 ## Prerequisites
 As of now only tested on Ubuntu 18.04
 
