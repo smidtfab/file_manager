@@ -3,7 +3,7 @@ import glob
 from pathlib import PurePath, Path
 
 # path where to organise
-PATH = '/home/fabian/Downloads/test/'
+PATH = '/home/fabian/Downloads/'
 
 # glob function of glob module to detect all files inside directory
 files_list = glob.glob(PATH + "*")
@@ -11,7 +11,8 @@ files_list = glob.glob(PATH + "*")
 # set up rules for automatic moving of certain file type
 rules =	{
   "pdf": "/home/fabian/Documents/",
-  "png": "/home/fabian/Pictures/"
+  "png": "/home/fabian/Pictures/",
+  "jpeg": "/home/fabian/Pictures/"
 }
 
 # creating a set of extension types inside the folder to avoid duplicate entries
